@@ -1,0 +1,43 @@
+{
+  "name": "SOPFeedback",
+  "type": "object",
+  "properties": {
+    "sop_id": {
+      "type": "string",
+      "description": "Reference to the SOPDocument"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "question",
+        "suggestion",
+        "issue",
+        "praise"
+      ],
+      "description": "Type of feedback"
+    },
+    "content": {
+      "type": "string",
+      "description": "Feedback content"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "resolved",
+        "closed"
+      ],
+      "default": "open",
+      "description": "Feedback status"
+    },
+    "reply": {
+      "type": "string",
+      "description": "Admin reply to the feedback"
+    }
+  },
+  "required": [
+    "sop_id",
+    "type",
+    "content"
+  ]
+}

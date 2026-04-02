@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  sop-manager-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_SOP_APP_ID=cbef744a8545c389ef439ea6
+      - VITE_SOP_APP_BASE_URL=http://localhost:5173
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+  sop-manager-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./entities:/app/entities
+    command: node server.js

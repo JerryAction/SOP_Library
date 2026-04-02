@@ -1,0 +1,61 @@
+{
+  "name": "SOPDocument",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "SOP document title"
+    },
+    "content": {
+      "type": "string",
+      "description": "Rich text content of the SOP"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Brief summary of the SOP"
+    },
+    "category_id": {
+      "type": "string",
+      "description": "Reference to SOPCategory"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for the SOP"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "default": "draft",
+      "description": "Publication status"
+    },
+    "version": {
+      "type": "number",
+      "default": 1,
+      "description": "Current version number"
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of views"
+    },
+    "related_sop_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "IDs of related SOP documents"
+    }
+  },
+  "required": [
+    "title",
+    "content",
+    "status"
+  ]
+}

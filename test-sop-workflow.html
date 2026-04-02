@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP 文档工作流程测试 - 功能测试文档</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 30px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        h3 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .test-description {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .test-description p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .test-steps {
+            margin-bottom: 30px;
+        }
+        .test-steps ol {
+            margin-left: 20px;
+            color: #666;
+        }
+        .test-steps li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #28a745;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            flex: 1;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        button.secondary {
+            background-color: #6c757d;
+        }
+        button.secondary:hover {
+            background-color: #5a6268;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .test-results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .test-results h3 {
+            margin-bottom: 15px;
+        }
+        .test-results ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        .test-results li {
+            margin-bottom: 8px;
+        }
+        .test-environment {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 4px;
+        }
+        .test-environment h3 {
+            margin-bottom: 10px;
+        }
+        .test-environment p {
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .notes {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+        }
+        .notes h3 {
+            margin-bottom: 10px;
+            color: #856404;
+        }
+        .notes ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        .notes li {
+            margin-bottom: 8px;
+        }
+        .workflow-diagram {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .workflow-step {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            margin: 5px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .workflow-arrow {
+            font-size: 20px;
+            color: #666;
+            margin: 0 10px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .workflow-steps {
+                flex-direction: column;
+            }
+            .workflow-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SOP 文档工作流程测试 - 功能测试文档</h1>
+        
+        <div class="test-environment">
+            <h3>测试环境</h3>
+            <p><strong>浏览器：</strong>Chrome、Firefox、Safari、Edge</p>
+            <p><strong>设备：</strong>桌面端、移动端</p>
+            <p><strong>网络环境：</strong>正常网络连接</p>
+            <p><strong>前置条件：</strong>已登录系统，拥有文档编辑权限</p>
+        </div>
+        
+        <div class="test-description">
+            <h2>测试目的</h2>
+            <p>验证 SOP 文档的完整工作流程是否正常运行，包括文档的创建、编辑、发布、查看和管理等功能。</p>
+            
+            <h2>工作流程</h2>
+            <div class="workflow-diagram">
+                <div class="workflow-steps">
+                    <div class="workflow-step">创建文档</div>
+                    <span class="workflow-arrow">→</span>
+                    <div class="workflow-step">编辑内容</div>
+                    <span class="workflow-arrow">→</span>
+                    <div class="workflow-step">保存草稿</div>
+                    <span class="workflow-arrow">→</span>
+                    <div class="workflow-step">发布文档</div>
+                    <span class="workflow-arrow">→</span>
+                    <div class="workflow-step">查看文档</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-steps">
+            <h3>测试步骤</h3>
+            <ol>
+                <li>在下方表单中填写文档信息</li>
+                <li>点击「创建文档」按钮模拟文档创建</li>
+                <li>验证文档是否成功创建</li>
+                <li>点击「编辑文档」按钮模拟文档编辑</li>
+                <li>更新文档内容后点击「保存草稿」</li>
+                <li>点击「发布文档」按钮将文档状态更改为已发布</li>
+                <li>点击「查看文档」按钮验证文档内容</li>
+                <li>点击「重置测试数据」按钮可清除所有测试记录，重新开始测试</li>
+            </ol>
+        </div>
+        
+        <form id="sopForm">
+            <div class="form-group">
+                <label for="title">文档标题</label>
+                <input type="text" id="title" name="title" value="测试SOP文档" required>
+            </div>
+            <div class="form-group">
+                <label for="content">文档内容</label>
+                <textarea id="content" name="content" required>这是测试SOP文档的内容，用于验证文档工作流程。</textarea>
+            </div>
+            <div class="form-group">
+                <label for="summary">文档摘要</label>
+                <input type="text" id="summary" name="summary" value="测试SOP文档摘要" required>
+            </div>
+            <div class="form-group">
+                <label for="category">分类</label>
+                <select id="category" name="category" required>
+                    <option value="1">默认分类</option>
+                    <option value="2">技术文档</option>
+                    <option value="3">操作指南</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tags">标签（用逗号分隔）</label>
+                <input type="text" id="tags" name="tags" value="测试,流程,示例">
+            </div>
+            <div class="form-group">
+                <label for="status">状态</label>
+                <select id="status" name="status" required>
+                    <option value="draft">草稿</option>
+                    <option value="published">已发布</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button type="button" id="createBtn">创建文档</button>
+                <button type="button" id="editBtn">编辑文档</button>
+                <button type="button" id="saveBtn">保存草稿</button>
+                <button type="button" id="publishBtn">发布文档</button>
+                <button type="button" id="viewBtn">查看文档</button>
+                <button type="button" class="secondary" id="resetBtn">重置测试数据</button>
+            </div>
+        </form>
+        
+        <div id="message" class="message" style="display: none;"></div>
+        
+        <div class="test-results">
+            <h3>测试结果记录</h3>
+            <ul id="testResults">
+                <!-- 测试结果将在这里动态添加 -->
+            </ul>
+        </div>
+        
+        <div class="notes">
+            <h3>注意事项</h3>
+            <ul>
+                <li>测试过程中请不要刷新页面，否则可能会影响测试结果</li>
+                <li>测试数据基于浏览器本地存储，清除浏览器数据会重置测试状态</li>
+                <li>本测试仅模拟前端工作流程，实际系统应在后端实现相同的功能</li>
+                <li>测试完成后请点击「重置测试数据」按钮清除测试记录</li>
+                <li>如需测试真实环境，请确保已正确配置后端API连接</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        /**
+         * SOP 文档工作流程测试管理器
+         * 负责处理文档的创建、编辑、保存、发布和查看等操作
+         */
+        class SOPWorkflowManager {
+            constructor() {
+                this.storageKey = 'sopTestDocuments';
+            }
+
+            /**
+             * 获取测试文档列表
+             * @returns {Array} 文档列表
+             */
+            getDocuments() {
+                try {
+                    const documents = localStorage.getItem(this.storageKey);
+                    return documents ? JSON.parse(documents) : [];
+                } catch (error) {
+                    console.error('Error getting documents:', error);
+                    return [];
+                }
+            }
+
+            /**
+             * 保存测试文档列表
+             * @param {Array} documents 文档列表
+             */
+            saveDocuments(documents) {
+                try {
+                    localStorage.setItem(this.storageKey, JSON.stringify(documents));
+                } catch (error) {
+                    console.error('Error saving documents:', error);
+                }
+            }
+
+            /**
+             * 创建文档
+             * @param {Object} docData 文档数据
+             * @returns {Object} 创建的文档
+             */
+            createDocument(docData) {
+                const documents = this.getDocuments();
+                const newDocument = {
+                    id: Date.now().toString(),
+                    ...docData,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                };
+                documents.push(newDocument);
+                this.saveDocuments(documents);
+                return newDocument;
+            }
+
+            /**
+             * 编辑文档
+             * @param {string} id 文档ID
+             * @param {Object} docData 文档数据
+             * @returns {Object|null} 更新后的文档
+             */
+            editDocument(id, docData) {
+                const documents = this.getDocuments();
+                const index = documents.findIndex(doc => doc.id === id);
+                if (index === -1) return null;
+                
+                documents[index] = {
+                    ...documents[index],
+                    ...docData,
+                    updated_at: new Date().toISOString()
+                };
+                this.saveDocuments(documents);
+                return documents[index];
+            }
+
+            /**
+             * 发布文档
+             * @param {string} id 文档ID
+             * @returns {Object|null} 发布后的文档
+             */
+            publishDocument(id) {
+                return this.editDocument(id, { status: 'published' });
+            }
+
+            /**
+             * 获取文档
+             * @param {string} id 文档ID
+             * @returns {Object|null} 文档
+             */
+            getDocument(id) {
+                const documents = this.getDocuments();
+                return documents.find(doc => doc.id === id) || null;
+            }
+
+            /**
+             * 重置测试数据
+             */
+            reset() {
+                try {
+                    localStorage.removeItem(this.storageKey);
+                } catch (error) {
+                    console.error('Error resetting test data:', error);
+                }
+            }
+        }
+
+        // 创建工作流管理器实例
+        const workflowManager = new SOPWorkflowManager();
+        let currentDocumentId = null;
+
+        /**
+         * 添加测试结果记录
+         * @param {string} message 测试结果消息
+         */
+        function addTestResult(message) {
+            const testResults = document.getElementById('testResults');
+            const li = document.createElement('li');
+            const timestamp = new Date().toLocaleTimeString();
+            li.textContent = `[${timestamp}] ${message}`;
+            testResults.appendChild(li);
+            // 滚动到底部
+            testResults.scrollTop = testResults.scrollHeight;
+        }
+
+        /**
+         * 显示消息
+         * @param {string} message 消息内容
+         * @param {string} type 消息类型 (success, error, info)
+         */
+        function showMessage(message, type = 'info') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+        }
+
+        // 处理创建文档按钮点击
+        document.getElementById('createBtn').addEventListener('click', function() {
+            const form = document.getElementById('sopForm');
+            const formData = new FormData(form);
+            const docData = {
+                title: formData.get('title'),
+                content: formData.get('content'),
+                summary: formData.get('summary'),
+                category_id: formData.get('category'),
+                tags: formData.get('tags').split(',').map(tag => tag.trim()),
+                status: formData.get('status')
+            };
+            
+            const document = workflowManager.createDocument(docData);
+            currentDocumentId = document.id;
+            showMessage('文档创建成功', 'success');
+            addTestResult(`文档创建成功，ID: ${document.id}`);
+        });
+
+        // 处理编辑文档按钮点击
+        document.getElementById('editBtn').addEventListener('click', function() {
+            if (!currentDocumentId) {
+                showMessage('请先创建文档', 'error');
+                return;
+            }
+            showMessage('进入编辑模式，请修改表单内容后点击保存草稿', 'info');
+            addTestResult('进入文档编辑模式');
+        });
+
+        // 处理保存草稿按钮点击
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            if (!currentDocumentId) {
+                showMessage('请先创建文档', 'error');
+                return;
+            }
+            
+            const form = document.getElementById('sopForm');
+            const formData = new FormData(form);
+            const docData = {
+                title: formData.get('title'),
+                content: formData.get('content'),
+                summary: formData.get('summary'),
+                category_id: formData.get('category'),
+                tags: formData.get('tags').split(',').map(tag => tag.trim()),
+                status: 'draft'
+            };
+            
+            const document = workflowManager.editDocument(currentDocumentId, docData);
+            if (document) {
+                showMessage('文档保存成功', 'success');
+                addTestResult('文档保存为草稿');
+            } else {
+                showMessage('文档保存失败', 'error');
+            }
+        });
+
+        // 处理发布文档按钮点击
+        document.getElementById('publishBtn').addEventListener('click', function() {
+            if (!currentDocumentId) {
+                showMessage('请先创建文档', 'error');
+                return;
+            }
+            
+            const document = workflowManager.publishDocument(currentDocumentId);
+            if (document) {
+                showMessage('文档发布成功', 'success');
+                addTestResult('文档已发布');
+            } else {
+                showMessage('文档发布失败', 'error');
+            }
+        });
+
+        // 处理查看文档按钮点击
+        document.getElementById('viewBtn').addEventListener('click', function() {
+            if (!currentDocumentId) {
+                showMessage('请先创建文档', 'error');
+                return;
+            }
+            
+            const document = workflowManager.getDocument(currentDocumentId);
+            if (document) {
+                showMessage(`查看文档: ${document.title} (${document.status})`, 'info');
+                addTestResult(`查看文档: ${document.title}, 状态: ${document.status}`);
+            } else {
+                showMessage('文档不存在', 'error');
+            }
+        });
+
+        // 处理重置按钮点击
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            workflowManager.reset();
+            currentDocumentId = null;
+            document.getElementById('message').style.display = 'none';
+            document.getElementById('testResults').innerHTML = '';
+            addTestResult('测试数据已重置，可重新开始测试');
+        });
+
+        // 页面加载时初始化
+        window.addEventListener('load', function() {
+            addTestResult('测试文档已加载，准备开始测试');
+        });
+    </script>
+</body>
+</html>
