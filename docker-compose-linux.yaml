@@ -13,7 +13,8 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    command: npm run dev
+      - ./dist:/app/dist
+    command: sh -c "npm run build && npm run dev"
 
   sop-manager-backend:
     build:
@@ -24,5 +25,7 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - ./entities:/app/entities
+      - ./dist:/app/dist
     command: node server.js
+    depends_on:
+      - sop-manager-frontend
