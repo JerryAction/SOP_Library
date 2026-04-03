@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
 
 const app = express();
 const port = 3000;
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // 提供静态文件
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(process.cwd(), 'dist')));
 
 // 健康检查端点
 app.get('/health', (req, res) => {
@@ -21,7 +21,7 @@ app.get('/health', (req, res) => {
 
 // 处理所有其他请求，返回前端应用
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
 });
 
 // 启动服务器

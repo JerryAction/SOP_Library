@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Save, X, Plus } from "lucide-react";
 import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useToast } from "@/components/ui/use-toast";
 import DynamicForm from "@/components/ui/DynamicForm";
 
@@ -222,13 +223,34 @@ export default function DocumentEditor() {
             </div>
             <div>
               <Label htmlFor="content">详细内容 *</Label>
-              <Textarea
-                id="content"
-                value={form.content}
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
-                placeholder="输入文档详细内容"
-                className="mt-1 h-60"
-              />
+              <div className="mt-1">
+                <div className="w-full overflow-x-auto">
+                  <ReactQuill
+                    id="content"
+                    value={form.content}
+                    onChange={(value) => setForm({ ...form, content: value })}
+                    placeholder="输入文档详细内容"
+                    className="min-h-[200px] max-h-[600px] overflow-y-auto min-w-[100%]"
+                    modules={{
+                      toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote', 'code-block'],
+                        [{ 'header': 1 }, { 'header': 2 }],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        [{ 'script': 'sub' }, { 'script': 'super' }],
+                        [{ 'indent': '-1' }, { 'indent': '+1' }],
+                        [{ 'direction': 'rtl' }],
+                        [{ 'size': ['small', false, 'large', 'huge'] }],
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'font': [] }],
+                        [{ 'align': [] }],
+                        ['clean']
+                      ]
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </CardContent>

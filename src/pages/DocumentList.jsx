@@ -68,7 +68,7 @@ export default function DocumentList() {
   const [isSelectMode, setIsSelectMode] = useState(false);
   const [isCleanupDialogOpen, setIsCleanupDialogOpen] = useState(false);
   const [cleanupMode, setCleanupMode] = useState('keep'); // 'keep' or 'keyword'
-  const [keepCount, setKeepCount] = useState(10);
+  const [keepCount, setKeepCount] = useState(3);
   const [cleanupKeyword, setCleanupKeyword] = useState('实例');
 
   const canCreate = userRole === "admin" || userRole === "contributor";
@@ -307,7 +307,7 @@ export default function DocumentList() {
           </p>
         </div>
         {canCreate && (
-          <Link to="/documents/create">
+          <Link to="/documents/new">
             <Button className="gap-2">
               <Plus className="w-4 h-4" />
               新建文档

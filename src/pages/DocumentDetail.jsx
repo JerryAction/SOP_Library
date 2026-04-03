@@ -301,7 +301,7 @@ export default function DocumentDetail() {
       {/* Content */}
       <Card>
         <CardContent className="p-6 lg:p-8 prose prose-slate max-w-none dark:prose-invert">
-          <ReactMarkdown>{sop.content}</ReactMarkdown>
+          <div dangerouslySetInnerHTML={{ __html: sop.content }} />
         </CardContent>
       </Card>
 

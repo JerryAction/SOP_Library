@@ -76,8 +76,8 @@ const initLocalStorage = () => {
     safeLocalStorage.setItem('sopCategories', defaultCategories);
   }
   
+  // 初始化默认文档数据，只有在localStorage中没有sopDocuments时才初始化
   if (!localStorage.getItem('sopDocuments')) {
-    // 初始化默认文档数据
     const defaultDocuments = [
       {
         id: '1',
@@ -97,6 +97,17 @@ const initLocalStorage = () => {
         summary: '产品出厂前的质量检验流程',
         category_id: '2',
         tags: ['质量', '检验', '出厂'],
+        status: 'published',
+        created_date: new Date().toISOString(),
+        updated_date: new Date().toISOString()
+      },
+      {
+        id: '3',
+        title: '设备维护保养规程',
+        content: '# 1. 目的\n确保设备正常运行，延长设备使用寿命。\n\n# 2. 维护步骤\n1. 日常清洁\n2. 定期检查\n3. 故障维修',
+        summary: '设备日常维护和保养的操作流程',
+        category_id: '5',
+        tags: ['设备', '维护', '保养'],
         status: 'published',
         created_date: new Date().toISOString(),
         updated_date: new Date().toISOString()
