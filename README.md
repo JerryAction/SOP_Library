@@ -1,6 +1,7 @@
 # SOP Manager
 
 SOP Manager 是一个专业的标准操作程序管理系统，用于创建、存储、管理和检索企业的SOP文档。
+<img width="2188" height="997" alt="image" src="https://github.com/user-attachments/assets/3a2ed8e4-05f7-4442-9b79-816c3736d33c" />
 
 ## 功能特性
 
